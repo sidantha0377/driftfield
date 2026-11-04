@@ -8,7 +8,7 @@ export default function Homepage() {
                 <h1 className='flex text-10xl  font-bold text-9xl text-center'>
                     Drift Field
                 </h1>
-                <p className='text-3xl font-bold italic'>"Creat your won drift field"</p>
+                <p className='text-3xl font-bold italic'>"Create your own drift field"</p>
             </div>
             <div className="relative z-20 grid gap-5 bg-gradient-to-r from-[#001a13] to-[#004c39] p-4 sm:gap-6 sm:p-20 lg:z-auto lg:bg-none md:grid-cols-3">
                 {tools.map((tool) => (
