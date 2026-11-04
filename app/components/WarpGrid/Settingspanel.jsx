@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { SCHEMA, toCSS } from './warpGridConfig';
+import { toHTML, toNext } from './warpGridExport';
 import { Control } from './Controls';
 
 export default function SettingsPanel({ settings, onChange, onReset }) {
@@ -87,6 +88,12 @@ export default function SettingsPanel({ settings, onChange, onReset }) {
                 <section className="wg-section wg-export">
                     <h2 className="wg-h2">Export</h2>
                     <div className="wg-export-actions">
+                        <button className="wg-btn" type="button" onClick={() => copyText(toHTML(settings), 'HTML copied')}>
+                            Copy HTML
+                        </button>
+                        <button className="wg-btn" type="button" onClick={() => copyText(toNext(settings), 'Next.js copied')}>
+                            Copy Next.js
+                        </button>
                         <button className="wg-btn" type="button" onClick={() => copyText(toCSS(settings), 'CSS copied')}>
                             Copy CSS
                         </button>
@@ -98,14 +105,17 @@ export default function SettingsPanel({ settings, onChange, onReset }) {
                             Copy JSON
                         </button>
                     </div>
-                    <p className="wg-note">Copy the CSS or JSON and paste it into your project.</p>
+                    <p className="wg-note">
+                        HTML is the whole animation in one file. Next.js is one component file. Both use your current
+                        settings.
+                    </p>
                     {jsonText !== null && (
                         <textarea
                             ref={jsonRef}
                             className="wg-json"
                             readOnly
                             value={jsonText}
-                            aria-label="Exported settings"
+                            aria-label="Exported code"
                         />
                     )}
                 </section>

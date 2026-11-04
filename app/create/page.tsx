@@ -1,4 +1,4 @@
-import WarpGrid from '@/app/components/Warpgrid';
+import WarpGrid from '@/app/components/WarpGrid/Warpgrid';
 
 export default function Page() {
     return (

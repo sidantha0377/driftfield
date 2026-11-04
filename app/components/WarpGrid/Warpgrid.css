@@ -129,9 +129,11 @@
     display: block;
     width: 100%;
     box-sizing: border-box;
-    height: 130px;
+    height: 170px;
     margin-top: 10px;
     resize: vertical;
+    white-space: pre;
+    overflow: auto;
     font: 11px/1.4 var(--font-label);
     color: var(--ink);
     background: #0b0b0c;
