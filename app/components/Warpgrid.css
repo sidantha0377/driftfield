@@ -1,0 +1,380 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:wght@400;500&display=swap');
+
+/* Variables are scoped to the component's elements (no body/html overrides). */
+.wg-field,
+.wg-dock,
+.wg-hint {
+    --page: #0a0a0a;
+    --panel: #111112;
+    --panel-edge: #28282c;
+    --ink: #ececee;
+    --ink-dim: #8e8e95;
+    --track: #2d2d31;
+    --well: #19191b;
+    --focus: #8ab4ff;
+    --on-ink: #0b0b0c;
+    --font-ui: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-label: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    color-scheme: dark;
+}
+
+.wg-field {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: none;
+}
+
+.wg-dock {
+    position: fixed;
+    z-index: 5;
+    top: calc(env(safe-area-inset-top, 0px) + 12px);
+    right: max(12px, env(safe-area-inset-right, 0px));
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    max-width: calc(100vw - 24px);
+    color: var(--ink);
+    font-family: var(--font-ui);
+}
+
+.wg-btn {
+    font: 500 11px var(--font-label);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--well);
+    border: 1px solid var(--panel-edge);
+    border-radius: 6px;
+    padding: 6px 9px;
+    cursor: pointer;
+}
+
+.wg-btn:hover {
+    background: #222226;
+}
+
+.wg-open-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    background: rgba(17, 17, 18, 0.88);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+.wg-open-btn svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+}
+
+.wg-panel {
+    width: min(300px, calc(100vw - 24px));
+    max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 76px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #3b3b40 transparent;
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
+    border-radius: 12px;
+    padding: 0 18px 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+.wg-panel[hidden] {
+    display: none;
+}
+
+.wg-panel-head {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 14px 0 12px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--panel-edge);
+}
+
+.wg-panel-title {
+    font: 600 14px var(--font-ui);
+    letter-spacing: 0.01em;
+}
+
+.wg-head-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.wg-status {
+    font: 400 11px var(--font-label);
+    color: var(--ink-dim);
+    min-width: 0;
+}
+
+.wg-json {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    height: 130px;
+    margin-top: 10px;
+    resize: vertical;
+    font: 11px/1.4 var(--font-label);
+    color: var(--ink);
+    background: #0b0b0c;
+    border: 1px solid var(--panel-edge);
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.wg-section {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--panel-edge);
+}
+
+.wg-panel-head+div>.wg-section:first-child {
+    margin-top: 0;
+    border-top: 0;
+    padding-top: 18px;
+}
+
+.wg-h2 {
+    margin: 0;
+    font: 500 10px var(--font-label);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+}
+
+.wg-row {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 14px;
+    min-width: 0;
+}
+
+.wg-row.wg-inline {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.wg-row-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.wg-row-label {
+    font: 500 13px var(--font-ui);
+    color: var(--ink);
+}
+
+.wg-val {
+    font: 400 11px var(--font-label);
+    color: var(--ink-dim);
+    font-variant-numeric: tabular-nums;
+}
+
+.wg-seg {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 9px;
+    background: var(--well);
+    border: 1px solid var(--panel-edge);
+}
+
+.wg-seg button {
+    border: 0;
+    background: transparent;
+    color: var(--ink-dim);
+    font: 500 12px var(--font-ui);
+    padding: 7px 4px;
+    border-radius: 6px;
+    cursor: pointer;
+    min-width: 0;
+}
+
+.wg-seg button:hover {
+    color: var(--ink);
+}
+
+.wg-seg button[aria-checked='true'] {
+    background: var(--ink);
+    color: var(--on-ink);
+}
+
+.wg-dock input[type='range'] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 18px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    --p: 50%;
+}
+
+.wg-dock input[type='range']::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(to right, var(--ink) var(--p), var(--track) var(--p));
+}
+
+.wg-dock input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    width: 14px;
+    height: 14px;
+    margin-top: -5.5px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 2px solid var(--ink);
+}
+
+.wg-dock input[type='range']::-moz-range-track {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--track);
+}
+
+.wg-dock input[type='range']::-moz-range-progress {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--ink);
+}
+
+.wg-dock input[type='range']::-moz-range-thumb {
+    box-sizing: border-box;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 2px solid var(--ink);
+}
+
+.wg-switch {
+    position: relative;
+    flex: none;
+    width: 42px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    background: var(--track);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.wg-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--ink);
+    transition: transform 0.15s, background 0.15s;
+}
+
+.wg-switch[aria-checked='true'] {
+    background: #d6d6da;
+}
+
+.wg-switch[aria-checked='true']::after {
+    transform: translateX(18px);
+    background: var(--on-ink);
+}
+
+.wg-dock input[type='color'] {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid var(--panel-edge);
+    border-radius: 7px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.wg-dock input[type='color']::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.wg-dock input[type='color']::-webkit-color-swatch {
+    border: 0;
+    border-radius: 6px;
+}
+
+.wg-dock input[type='color']::-moz-color-swatch {
+    border: 0;
+    border-radius: 6px;
+}
+
+.wg-dock button:focus-visible,
+.wg-dock input:focus-visible,
+.wg-dock textarea:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+}
+
+.wg-hint {
+    position: fixed;
+    z-index: 4;
+    left: max(12px, env(safe-area-inset-left, 0px));
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+    max-width: calc(100vw - 24px);
+    box-sizing: border-box;
+    padding: 8px 11px;
+    font: 400 11px/1.4 var(--font-label);
+    letter-spacing: 0.02em;
+    color: var(--ink-dim);
+    background: rgba(17, 17, 18, 0.88);
+    border: 1px solid var(--panel-edge);
+    border-radius: 8px;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    pointer-events: none;
+}
+
+.wg-export-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.wg-note {
+    margin: 12px 0 0;
+    font: 400 12px/1.5 var(--font-ui);
+    color: var(--ink-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .wg-switch,
+    .wg-switch::after {
+        transition: none;
+    }
+}
