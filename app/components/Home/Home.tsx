@@ -4,7 +4,7 @@ import { tools } from "./tools"
 export default function Homepage() {
     return (
         <div className='items-center'>
-            <div className='flex flex-col items-center p-100'>
+            <div className=' top-0 z-0 flex min-h-[100svh] flex-col items-center justify-center px-5 py-10 text-center'>
                 <h1 className='flex text-10xl  font-bold text-9xl text-center'>
                     Drift Field
                 </h1>
@@ -12,7 +12,7 @@ export default function Homepage() {
             </div>
             <div className="relative z-20 grid gap-5 bg-gradient-to-r from-[#001a13] to-[#004c39] p-4 sm:gap-6 sm:p-20 lg:z-auto lg:bg-none md:grid-cols-3">
                 {tools.map((tool) => (
-                    <div className="overflow-hidden rounded-2xl border border-emerald-100/10 bg-[#000000] transition-colors hover:border-white-300/40">
+                    <div key={tool.id} className="overflow-hidden rounded-2xl border border-emerald-100/10 bg-[#000000] transition-colors hover:border-white-300/40">
                         <div className="relative aspect-[16/10] overflow-hidden">
                             <img
                                 src={tool.imageUrl}
