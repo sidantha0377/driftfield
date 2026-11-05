@@ -1,0 +1,383 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Variables are scoped to the component's elements (no body/html overrides). */
+.lp-field,
+.lp-dock,
+.lp-hint {
+    --panel: #111112;
+    --panel-edge: #28282c;
+    --ink: #ececee;
+    --ink-dim: #8e8e95;
+    --track: #2d2d31;
+    --well: #19191b;
+    --focus: #8ab4ff;
+    --on-ink: #0b0b0c;
+    --font-ui: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-label: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    color-scheme: dark;
+}
+
+.lp-field {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: none;
+}
+
+.lp-dock {
+    position: fixed;
+    z-index: 5;
+    top: calc(env(safe-area-inset-top, 0px) + 12px);
+    right: max(12px, env(safe-area-inset-right, 0px));
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    max-width: calc(100vw - 24px);
+    color: var(--ink);
+    font-family: var(--font-ui);
+}
+
+.lp-btn {
+    font: 500 11px var(--font-label);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--well);
+    border: 1px solid var(--panel-edge);
+    border-radius: 6px;
+    padding: 6px 9px;
+    cursor: pointer;
+}
+
+.lp-btn:hover {
+    background: #222226;
+}
+
+.lp-open-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    background: rgba(17, 17, 18, 0.88);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+.lp-open-btn svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+}
+
+.lp-panel {
+    width: min(300px, calc(100vw - 24px));
+    max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 76px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #3b3b40 transparent;
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
+    border-radius: 12px;
+    padding: 0 18px 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+.lp-panel[hidden] {
+    display: none;
+}
+
+.lp-panel-head {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 14px 0 12px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--panel-edge);
+}
+
+.lp-panel-title {
+    font: 600 14px var(--font-ui);
+    letter-spacing: 0.01em;
+}
+
+.lp-head-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.lp-status {
+    font: 400 11px var(--font-label);
+    color: var(--ink-dim);
+    min-width: 0;
+}
+
+.lp-json {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    height: 170px;
+    margin-top: 10px;
+    resize: vertical;
+    white-space: pre;
+    overflow: auto;
+    font: 11px/1.4 var(--font-label);
+    color: var(--ink);
+    background: #0b0b0c;
+    border: 1px solid var(--panel-edge);
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.lp-section {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--panel-edge);
+}
+
+.lp-panel-head + div > .lp-section:first-child {
+    margin-top: 0;
+    border-top: 0;
+    padding-top: 18px;
+}
+
+.lp-h2 {
+    margin: 0;
+    font: 500 10px var(--font-label);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+}
+
+.lp-row {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 14px;
+    min-width: 0;
+}
+
+.lp-row.lp-inline {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.lp-row-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.lp-row-label {
+    font: 500 13px var(--font-ui);
+    color: var(--ink);
+}
+
+.lp-val {
+    font: 400 11px var(--font-label);
+    color: var(--ink-dim);
+    font-variant-numeric: tabular-nums;
+}
+
+.lp-presets {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.lp-preset {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    padding: 5px;
+    color: var(--ink-dim);
+    background: var(--well);
+    border: 1px solid var(--panel-edge);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.lp-preset:hover {
+    color: var(--ink);
+}
+
+.lp-preset[aria-pressed='true'] {
+    color: var(--ink);
+    border-color: var(--ink);
+}
+
+.lp-preset-bar {
+    display: block;
+    height: 22px;
+    border-radius: 4px;
+}
+
+.lp-preset-name {
+    display: block;
+    font: 500 10px var(--font-label);
+    letter-spacing: 0.03em;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lp-seg {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 9px;
+    background: var(--well);
+    border: 1px solid var(--panel-edge);
+}
+
+.lp-seg button {
+    border: 0;
+    background: transparent;
+    color: var(--ink-dim);
+    font: 500 12px var(--font-ui);
+    padding: 7px 4px;
+    border-radius: 6px;
+    cursor: pointer;
+    min-width: 0;
+}
+
+.lp-seg button:hover {
+    color: var(--ink);
+}
+
+.lp-seg button[aria-checked='true'] {
+    background: var(--ink);
+    color: var(--on-ink);
+}
+
+.lp-dock input[type='range'] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 18px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    --p: 50%;
+}
+
+.lp-dock input[type='range']::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(to right, var(--ink) var(--p), var(--track) var(--p));
+}
+
+.lp-dock input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    width: 14px;
+    height: 14px;
+    margin-top: -5.5px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 2px solid var(--ink);
+}
+
+.lp-dock input[type='range']::-moz-range-track {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--track);
+}
+
+.lp-dock input[type='range']::-moz-range-progress {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--ink);
+}
+
+.lp-dock input[type='range']::-moz-range-thumb {
+    box-sizing: border-box;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 2px solid var(--ink);
+}
+
+.lp-dock input[type='color'] {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid var(--panel-edge);
+    border-radius: 7px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.lp-dock input[type='color']::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.lp-dock input[type='color']::-webkit-color-swatch {
+    border: 0;
+    border-radius: 6px;
+}
+
+.lp-dock input[type='color']::-moz-color-swatch {
+    border: 0;
+    border-radius: 6px;
+}
+
+.lp-dock button:focus-visible,
+.lp-dock input:focus-visible,
+.lp-dock textarea:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+}
+
+.lp-hint {
+    position: fixed;
+    z-index: 4;
+    left: max(12px, env(safe-area-inset-left, 0px));
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+    max-width: calc(100vw - 24px);
+    box-sizing: border-box;
+    padding: 8px 11px;
+    font: 400 11px/1.4 var(--font-label);
+    letter-spacing: 0.02em;
+    color: var(--ink-dim);
+    background: rgba(17, 17, 18, 0.88);
+    border: 1px solid var(--panel-edge);
+    border-radius: 8px;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    pointer-events: none;
+}
+
+.lp-export-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.lp-note {
+    margin: 12px 0 0;
+    font: 400 12px/1.5 var(--font-ui);
+    color: var(--ink-dim);
+}

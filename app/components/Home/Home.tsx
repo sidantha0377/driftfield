@@ -47,6 +47,13 @@ export default function Homepage() {
 
 
             </div>
+            <div className='flex flex-col p-4 text-xl '>
+                <p className='pl-8 pr-8'> Drift Field is a collection of tools for creating stunning CSS backgrounds
+                    without the guesswork. Design warp grids, flowing patterns, and layered
+                    effects with live controls, preview them instantly, and copy production-ready
+                    CSS straight into your project. No images, no heavy libraries, just lightweight
+                    code that looks great on any screen.</p>
+            </div>
         </div>
     )
 }
