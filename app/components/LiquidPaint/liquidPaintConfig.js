@@ -23,6 +23,7 @@ export const DEFAULTS = {
   streaks: 30,
   mouseEffect: 'smear',
   strength: 60,
+  mix: 80,
   brushSize: 160,
   linger: 55,
   renderScale: 0.75,
@@ -62,6 +63,7 @@ export const SCHEMA = [
     items: [
       { k: 'mouseEffect', t: 'seg', label: 'Effect', opts: [['smear', 'Smear'], ['swirl', 'Swirl'], ['bulge', 'Bulge']] },
       { k: 'strength', t: 'range', label: 'Strength', min: 0, max: 100, step: 1, fmt: (v) => v + '%' },
+      { k: 'mix', t: 'range', label: 'Color Mix', min: 0, max: 100, step: 1, fmt: (v) => v + '%' },
       { k: 'brushSize', t: 'range', label: 'Brush Size', min: 40, max: 400, step: 5, fmt: (v) => v + 'px' },
       { k: 'linger', t: 'range', label: 'Linger', min: 0, max: 100, step: 1, fmt: (v) => v + '%' },
     ],

@@ -59,6 +59,7 @@ The exported file holds the engine and your settings, so it works without the re
 | `streaks` | Number of glowing lines, 0 to 100 |
 | `mouseEffect` | `'smear'` drags the paint the way the mouse moves. `'swirl'` twists it. `'bulge'` magnifies it. |
 | `strength` | How strongly the mouse bends the paint, 0 to 100 |
+| `mix` | How much the mouse colors dissolve into the paint instead of sitting on top, 0 to 100 |
 | `brushSize` | Size of the area the mouse affects, 40 to 400 px |
 | `linger` | How long mouse colors and bends stay, 0 to 100 |
 | `renderScale` | Share of the screen's pixels that are drawn, 0.3 to 1. Lower it on weak graphics cards. |

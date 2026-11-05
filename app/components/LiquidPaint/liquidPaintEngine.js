@@ -14,7 +14,7 @@
  *
  * Options: colorMode ('palette' | 'single'), surface1..surface4, mouse1,
  * mouse2 (any CSS color), flow (0-2), streaks (0-100), mouseEffect ('smear' |
- * 'swirl' | 'bulge'), strength (0-100), brushSize (40-400 px), linger (0-100),
+ * 'swirl' | 'bulge'), strength (0-100), mix (0-100), brushSize (40-400 px), linger (0-100),
  * renderScale (0.3-1), respectReducedMotion.
  *
  * Add data-liquid-ignore to any element that should not affect the paint while
@@ -31,10 +31,10 @@ export function createLiquid(cv, initial) {
     colorMode: 'palette',
     surface1: '#070810', surface2: '#3a1d7a', surface3: '#0b8a8f', surface4: '#f4d6a0',
     mouse1: '#ff5a36', mouse2: '#3df0c2',
-    flow: 0.5, streaks: 30, mouseEffect: 'smear', strength: 60, brushSize: 160, linger: 55,
+    flow: 0.5, streaks: 30, mouseEffect: 'smear', strength: 60, mix: 80, brushSize: 160, linger: 55,
     renderScale: 0.75, respectReducedMotion: true
   };
-  const RANGES = { flow: [0, 2], streaks: [0, 100], strength: [0, 100], brushSize: [40, 400], linger: [0, 100], renderScale: [0.3, 1] };
+  const RANGES = { flow: [0, 2], streaks: [0, 100], strength: [0, 100], mix: [0, 100], brushSize: [40, 400], linger: [0, 100], renderScale: [0.3, 1] };
   const COLOR_KEYS = ['surface1', 'surface2', 'surface3', 'surface4', 'mouse1', 'mouse2'];
   const FALLBACK_RGB = {
     surface1: [7, 8, 16], surface2: [58, 29, 122], surface3: [11, 138, 143], surface4: [244, 214, 160],
@@ -66,6 +66,7 @@ uniform float u_single;
 uniform float u_brush;
 uniform float u_mode;
 uniform float u_strength;
+uniform float u_mix;
 uniform vec2 u_dir[32];
 uniform vec3 u_c0;
 uniform vec3 u_c1;
@@ -161,9 +162,16 @@ void main() {
   vec3 col = mix(palette(f), single(f), u_single);
 
   // Mouse colors fade into the liquid where the trail is strong.
-  float mix_amt = smoothstep(0.0, 1.0, clamp(mw * 0.8, 0.0, 1.0));
-  vec3 mc = (mcol / max(mw, 0.0001)) * (0.6 + 0.5 * f);
-  col = mix(col, min(mc, vec3(1.0)), mix_amt * 0.8);
+  // The mouse colors dissolve into the paint: they take on the paint's own light and
+  // dark, settle into its flowing shapes, and weave both mouse colors through them.
+  float dye = smoothstep(0.0, 1.0, clamp(mw * 0.9, 0.0, 1.0));
+  vec3 mc = mcol / max(mw, 0.0001);
+  float band = 0.5 + 0.5 * sin(f * 9.0 + r.x * 7.0);
+  mc = mix(mc, mix(u_m0, u_m1, band), 0.25);
+  float lum = dot(col, vec3(0.299, 0.587, 0.114));
+  vec3 tint = mc * (0.4 + 1.3 * lum);
+  float amt = dye * u_mix * (0.35 + 0.65 * band);
+  col = mix(col, min(tint, vec3(1.0)), clamp(amt, 0.0, 1.0));
 
   // Streaks: thin bright lines where the number crosses fixed values.
   float gate = smoothstep(0.0, 0.1, u_streaks);
@@ -276,7 +284,7 @@ void main() {
       return false;
     }
     gl.useProgram(prog);
-    const names = ['u_res', 'u_time', 'u_streaks', 'u_single', 'u_brush', 'u_mode', 'u_strength', 'u_dir', 'u_c0', 'u_c1', 'u_c2', 'u_c3', 'u_m0', 'u_m1', 'u_trail'];
+    const names = ['u_res', 'u_time', 'u_streaks', 'u_single', 'u_brush', 'u_mode', 'u_strength', 'u_mix', 'u_dir', 'u_c0', 'u_c1', 'u_c2', 'u_c3', 'u_m0', 'u_m1', 'u_trail'];
     loc = {};
     for (let i = 0; i < names.length; i++) loc[names[i]] = gl.getUniformLocation(prog, names[i]);
     cv.style.background = '';
@@ -402,6 +410,7 @@ void main() {
     gl.uniform1f(loc.u_brush, o.brushSize / (Math.min(W, H) || 1));
     gl.uniform1f(loc.u_mode, o.mouseEffect === 'smear' ? 0 : o.mouseEffect === 'swirl' ? 1 : 2);
     gl.uniform1f(loc.u_strength, o.strength / 100);
+    gl.uniform1f(loc.u_mix, o.mix / 100);
     gl.uniform2fv(loc.u_dir, trailDir);
     gl.uniform3fv(loc.u_c0, cols.surface1);
     gl.uniform3fv(loc.u_c1, cols.surface2);
