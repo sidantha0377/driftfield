@@ -10,7 +10,7 @@ export default function Homepage() {
                 </h1>
                 <p className='text-3xl font-bold italic'>"Create your own drift field"</p>
             </div>
-            <div className="relative z-20 grid gap-5 bg-gradient-to-r from-[#001a13] to-[#004c39] p-4 sm:gap-6 sm:p-20 lg:z-auto lg:bg-none md:grid-cols-3">
+            <div className="relative z-20 grid gap-5  p-4 sm:gap-6 sm:p-20 lg:z-auto lg:bg-none md:grid-cols-3">
                 {tools.map((tool) => (
                     <div key={tool.id} className="overflow-hidden rounded-2xl border border-emerald-100/10 bg-[#000000] transition-colors hover:border-white-300/40">
                         <div className="relative aspect-[16/10] overflow-hidden">
